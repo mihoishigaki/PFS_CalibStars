@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import scipy.optimize as so
 import sys, logging
 
-pfs_calibstars_dir = '/Users/ishigakimiho/PFS/Github/pfs_calibstars'
+#pfs_calibstars_dir = '/Users/ishigakimiho/PFS/Github/pfs_calibstars'
 
-sys.path.append(pfs_calibstars_dir)
-from pfs_calibstars import calibstars as cs
+#sys.path.append(pfs_calibstars_dir)
+#from pfs_calibstars import calibstars as cs
 
 
 

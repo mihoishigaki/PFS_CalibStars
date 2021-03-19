@@ -59,7 +59,7 @@ def produce_database(libID, multiproc = False):
 
     if libID == 'HDS':
 
-        catalogfile = "../catalogs/"+libID+"/"+"catalog_test_"+libID+".csv"
+        catalogfile = "../catalogs/"+libID+"/"+"catalog_"+libID+".csv"
         
         df = pd.read_csv(catalogfile)
 
@@ -1102,7 +1102,7 @@ def write_caption(outsncname_giant, outsncname_dwarf):
 def initialize_directories(ObjID, libID, YorN = "Y"):
 
 
-    database_dir = "/Volumes/Extreme SSD/home/pfs_calibstars/database"
+    database_dir = "../../pfs_calibstars/database"
 
     
     Synspec_Path = "../inputs/" + libID + "/"
@@ -1262,7 +1262,7 @@ def get_stellarinfo(ObjID,libID):
     if libID == "HDS":
 
          # Read catalog of star's basic information
-        catalogfile = "../catalogs/"+libID+"/"+"catalog_test_"+libID+".csv"
+        catalogfile = "../catalogs/"+libID+"/"+"catalog_"+libID+".csv"
         df = pd.read_csv(catalogfile)
         filt = df['HaKiDaSName'] == "HaKiDaS" + ObjID
 

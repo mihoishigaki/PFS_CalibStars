@@ -42,12 +42,12 @@ import pfs_calibstars as cs
 
 
 libID = "HDS"
-cs.produce_database(database_dir, libID)
+cs.produce_database(libID)
 
 
 # ## Produce many simulated spectra 
 
-# In[ ]:
+# In[9]:
 
 
 libID = "HDS"
