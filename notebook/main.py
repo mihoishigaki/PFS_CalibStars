@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
+# In[8]:
 
 
 get_ipython().run_line_magic('matplotlib', 'inline')
@@ -27,6 +27,11 @@ from pfsspecsim import pfsspec
 # Please specify a place where the codes are located 
 pfs_calibstars_dir = '/Users/ishigakimiho/PFS/Github/pfs_calibstars'
 sys.path.append(pfs_calibstars_dir)
+
+
+database_dir = "../../pfs_calibstars_data/database"
+output_dir = "../../pfs_calibstars_data/outputs"
+
 import pfs_calibstars as cs
 
 
@@ -37,17 +42,16 @@ import pfs_calibstars as cs
 
 
 libID = "HDS"
-cs.produce_database(libID)
+cs.produce_database(database_dir, libID)
 
 
 # ## Produce many simulated spectra 
 
-# In[18]:
+# In[ ]:
 
 
 libID = "HDS"
 nreal = 100
-output_rootdir = "../outputs"
 
 ObjIDs = ["00092", "00081"]
 
@@ -60,32 +64,7 @@ for ObjID in ObjIDs:
         exptime, nexp = cs.get_exptime("sdss_g", mag, "science")
         nexps = [nexp]
 
-        cs.simulate_many_spectra(ObjID, libID, nexps, band, mag, nreal,                                  output_rootdir, setting = "Optimistic",                                  write_h5 = True)
-
-
-# ## Simulated spectra for the Mohammad's grid
-
-# In[6]:
-
-
-# Use inputs and outputs from etc.run()
-
-sim = pfsspec.Pfsspec()
-sim.set_param('outDir', outpath)
-sim.set_param('etcFile', outsncname)
-sim.set_param('MAG_FILE', magfilename)
-sim.set_param('EXP_NUM',nexp)
-sim.set_param('asciiTable', file[:-5] + ".sim")
-sim.set_param('nrealize',1)
-sim.make_sim_spec()
-
-w, f = np.loadtxt(outpath + file[:-5] + ".sim.dat", usecols = (0, 1), unpack = True)
-plt.plot(w, f)
-plt.xlim(380., 510.)
-plt.ylim(0.0, np.max(f[w < 500.]))
-plt.show()
-
-
+        cs.simulate_many_spectra(ObjID, libID, nexps, band, mag, nreal,                                  database_dir, output_dir, setting = "Optimistic",                                  write_h5 = True)
 
 
 # In[ ]:
