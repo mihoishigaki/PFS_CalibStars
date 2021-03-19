@@ -92,11 +92,11 @@ def calc_simspec_HDS(id):
 
 
     # Initialize subdirectories in the 'database' directory
-    initialize_directories(ObjID, libID)
+    database_dir = initialize_directories(ObjID, libID)
 
     
     # Get a file for the synthetic spectrum
-    synfile = get_synfile(ObjID, libID)
+    synfile = get_synfile(database_dir, ObjID, libID)
     
   
 
@@ -169,7 +169,7 @@ def calc_simspec_HDS(id):
             
 
             # output directory
-            outdir="../database/" + libID + "/" + \
+            outdir = database_dir + "/" + libID + "/" + \
                 ObjID + "/ETC_Outputs/" + res + "/" + setting_label + "/"
 
 
@@ -180,7 +180,7 @@ def calc_simspec_HDS(id):
 
             
             # Directory for simulated spectra
-            simdir="../database/" + libID + "/" + ObjID + "/Simulated/" + res + "/" + setting_label
+            simdir=database_dir + "/" + libID + "/" + ObjID + "/Simulated/" + res + "/" + setting_label
             
             
             # Run the simulator 
@@ -571,7 +571,8 @@ def plot_spec(files, w_min, w_max, synthfiles, outdir, \
 
 
 def plot_simulated_spec(ObjIDs, nexps, bands, mags, textlabels, \
-                        synthfiles, output_rootdir, insets, libID = "HDS"):
+                        synthfiles, database_dir, output_rootdir, \
+                        insets, libID = "HDS"):
 
     cmap = plt.get_cmap("tab10")
 
@@ -600,7 +601,7 @@ def plot_simulated_spec(ObjIDs, nexps, bands, mags, textlabels, \
                     
         
     
-        synfile = get_synfile(ObjID, libID, Vrad0flag = True)
+        synfile = get_synfile(database_dir, ObjID, libID, Vrad0flag = True)
 
     
         wave, flux = np.loadtxt(synfile, usecols = (0, 1), unpack = True)
@@ -756,7 +757,7 @@ def plot_simulated_spec(ObjIDs, nexps, bands, mags, textlabels, \
 
 
 def simulate_many_spectra(ObjID, libID, nexps, band, mag, \
-                          nreal, output_rootdir,  \
+                          nreal, database_dir, output_rootdir,  \
                           setting = "Optimistic", \
                           write_h5 = False, plot = False):
 
@@ -802,7 +803,7 @@ def simulate_many_spectra(ObjID, libID, nexps, band, mag, \
                     
         
 
-    synfile = get_synfile(ObjID, libID, Vrad0flag = True)
+    synfile = get_synfile(database_dir, ObjID, libID, Vrad0flag = True)
 
     wave, flux = np.loadtxt(synfile, usecols = (0, 1), unpack = True)
     
@@ -1100,6 +1101,10 @@ def write_caption(outsncname_giant, outsncname_dwarf):
 
 def initialize_directories(ObjID, libID, YorN = "Y"):
 
+
+    database_dir = "/Volumes/Extreme SSD/home/pfs_calibstars/database"
+
+    
     Synspec_Path = "../inputs/" + libID + "/"
     
     #print("Initiallize all relevant directories for Object: "+ObjID+". Is this OK?  (Y or N): \n")
@@ -1119,16 +1124,18 @@ def initialize_directories(ObjID, libID, YorN = "Y"):
 
 
     
-    if os.path.isdir("../database/" + libID + "/" + ObjID):
+    if os.path.isdir(database_dir + "/" + libID + "/" + ObjID):
     
-        shutil.rmtree("../database/" + libID + "/" + ObjID)
+        shutil.rmtree(database_dir + "/" + libID + "/" + ObjID)
     
-    Path("../database/" + libID + "/" + ObjID).mkdir(parents=True, exist_ok=True)
+    Path(database_dir + "/" + libID + "/" + ObjID).\
+        mkdir(parents=True, exist_ok=True)
 
     
 
     # Synthetic spectrum
-    path_to_copy_of_synspec = "../database/" + libID + "/" + ObjID + "/Synspec/"
+    path_to_copy_of_synspec = \
+        database_dir + "/" + libID + "/" + ObjID + "/Synspec/"
     
     Path(path_to_copy_of_synspec).mkdir(parents=True,exist_ok=True) 
 
@@ -1149,7 +1156,8 @@ def initialize_directories(ObjID, libID, YorN = "Y"):
 
     # ABmag
     
-    Path("../database/" + libID + "/"+ObjID+"/ABmag").mkdir(parents=True,exist_ok=True)
+    Path(database_dir + "/" + libID + "/"+ObjID+"/ABmag").\
+        mkdir(parents=True,exist_ok=True)
         
     # ETC outputs
 
@@ -1157,8 +1165,9 @@ def initialize_directories(ObjID, libID, YorN = "Y"):
     
         for setting_label in setting_labels:
     
-            Path("../database/" + libID + "/" + ObjID + \
-                 "/ETC_Outputs/"+res+"/"+setting_label).mkdir(parents=True,exist_ok=True)
+            Path(database_dir + "/" + libID + "/" + ObjID + \
+                 "/ETC_Outputs/"+res+"/"+setting_label).\
+                 mkdir(parents=True,exist_ok=True)
 
     
     # Simulated spectra
@@ -1167,10 +1176,11 @@ def initialize_directories(ObjID, libID, YorN = "Y"):
     
         for setting_label in setting_labels:
     
-            Path("../database/" + libID + "/" + ObjID + \
-                 "/Simulated/"+res+"/"+setting_label).mkdir(parents=True,exist_ok=True)
+            Path(database_dir + "/" + libID + "/" + ObjID + \
+                 "/Simulated/"+res+"/"+setting_label).\
+                 mkdir(parents=True,exist_ok=True)
     
-    return()
+    return(database_dir)
 
 
 def get_objname(ObjID, libID):
@@ -1228,14 +1238,14 @@ def get_mag(ObjID, libID, bands):
 
 
 
-def get_synfile(ObjID, libID, Vrad0flag = False):
+def get_synfile(database_dir, ObjID, libID, Vrad0flag = False):
 
 
     if Vrad0flag == True:
-        synfiles=glob.glob("../database/"+libID+"/"+ObjID+"/Synspec/*Vrad0.0.txt")
+        synfiles = glob.glob(database_dir + "/" + libID+"/"+ObjID+"/Synspec/*Vrad0.0.txt")
 
     else:
-        synfiles=glob.glob("../database/"+libID+"/"+ObjID+"/Synspec/*")
+        synfiles = glob.glob(database_dir + "/" + libID+"/"+ObjID+"/Synspec/*")
 
     
     if np.size(synfiles)==0:
