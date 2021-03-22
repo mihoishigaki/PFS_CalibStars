@@ -33,12 +33,12 @@ import pfs_calibstars as cs
 
 # ## Signal-to-noise ratios for the Mohammad's grid
 
-# In[5]:
+# In[2]:
 
 
-path = "/Users/ishigakimiho/PFS/Github/pfs_calibstars/speclib/Mohammad_grid/synthetic_grid/" 
+path = "../speclib/Mohammad_grid/synthetic_grid/" 
 file = "4000g+1.00z-3.00_4000-5000_xit2.0c0.00.spec"
-outpath = "/Users/ishigakimiho/PFS/Github/pfs_calibstars/outputs/Mohammad_grid/"
+outpath = "../../pfs_calibstars_data/outputs/Mohammad_grid/"
 
 w, nf, f = np.loadtxt(path + file, usecols = (0, 1, 2), unpack = True)
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[8]:
+# In[2]:
 
 
 get_ipython().run_line_magic('matplotlib', 'inline')
@@ -38,11 +38,11 @@ import pfs_calibstars as cs
 
 # ## Create databases of simulated spectra 
 
-# In[14]:
+# In[3]:
 
 
 libID = "HDS"
-cs.produce_database(libID)
+cs.produce_database(libID, multiproc = True)
 
 
 # ## Produce many simulated spectra 

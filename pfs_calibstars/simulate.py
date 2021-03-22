@@ -59,7 +59,7 @@ def produce_database(libID, multiproc = False):
 
     if libID == 'HDS':
 
-        catalogfile = "../catalogs/"+libID+"/"+"catalog_"+libID+".csv"
+        catalogfile = "../catalogs/"+libID+"/"+"catalog_test_"+libID+".csv"
         
         df = pd.read_csv(catalogfile)
 

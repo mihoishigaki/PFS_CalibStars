@@ -14256,10 +14256,10 @@ a.anchor-link {
     </script>
     <!-- End of mathjax configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -14298,28 +14298,6 @@ a.anchor-link {
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>The autoreload extension is already loaded. To reload it, use:
-  %reload_ext autoreload
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -14328,11 +14306,11 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[14]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">libID</span> <span class="o">=</span> <span class="s2">&quot;HDS&quot;</span>
-<span class="n">cs</span><span class="o">.</span><span class="n">produce_database</span><span class="p">(</span><span class="n">libID</span><span class="p">)</span>
+<span class="n">cs</span><span class="o">.</span><span class="n">produce_database</span><span class="p">(</span><span class="n">libID</span><span class="p">,</span> <span class="n">multiproc</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -14352,7 +14330,8 @@ a.anchor-link {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[&#39;Name of the object 00081 =&gt; BD+292356&#39;]
+<pre>[&#39;Name of the object 00092 =&gt; G53-41&#39;][&#39;Name of the object 00081 =&gt; BD+292356&#39;]
+
 </pre>
 </div>
 </div>
@@ -14366,38 +14345,7 @@ a.anchor-link {
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
 <pre>/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
   return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 62.6[sec]) #####
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 61.9[sec]) #####
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 61.0[sec]) #####
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 60.6[sec]) #####
-[&#39;Name of the object 00092 =&gt; G53-41&#39;]
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
+/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
   return dex.to(self._function_unit, np.log10(x))
 </pre>
 </div>
@@ -14411,13 +14359,21 @@ a.anchor-link {
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 62.8[sec]) #####
 ##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 62.1[sec]) #####
+##### finished (elapsed_time: 69.3[sec]) #####
+##### finished (elapsed_time: 69.6[sec]) #####
 ##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 61.5[sec]) #####
 ##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 66.3[sec]) #####
+##### finished (elapsed_time: 69.3[sec]) #####
+##### finished (elapsed_time: 69.5[sec]) #####
+##### starting to run ETC ... (it takes a few min.) #####
+##### starting to run ETC ... (it takes a few min.) #####
+##### finished (elapsed_time: 68.2[sec]) #####
+##### finished (elapsed_time: 68.1[sec]) #####
+##### starting to run ETC ... (it takes a few min.) #####
+##### starting to run ETC ... (it takes a few min.) #####
+##### finished (elapsed_time: 68.0[sec]) #####
+##### finished (elapsed_time: 68.3[sec]) #####
 </pre>
 </div>
 </div>
@@ -14425,7 +14381,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
 
 
 
