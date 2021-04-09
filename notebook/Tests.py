@@ -36,35 +36,23 @@ import pfs_calibstars as cs
 
 
 
-# ## Create databases of simulated spectra 
-
-# In[3]:
+# In[5]:
 
 
-libID = "HDS"
-cs.produce_database(libID, multiproc = True)
-
-
-# ## Produce many simulated spectra 
-
-# In[3]:
-
-
-libID = "HDS"
-nreal = 100
-
-ObjIDs = ["00092", "00081"]
-
+synspecpath = database_dir + "/HDS/00081/Synspec/"
+synspecfile = synspecpath + "WL_Flux_Error_BD+292356_Teff4827_logg1.6_MH-1.7_Vrad0.0.txt"
+w, f = np.loadtxt(synspecfile, usecols = (0, 1), unpack = True)
 band = "sdss_g"
+mag = 17.
 
-for ObjID in ObjIDs:
-    
-    for mag in [17., 18., 19., 20., 21., 22., 23.]: 
-        
-        exptime, nexp = cs.get_exptime("sdss_g", mag, "science")
-        nexps = [nexp]
+wv, mag = cs.flux2ABmag(w, f, band, mag)
 
-        cs.simulate_many_spectra(ObjID, libID, nexps, band, mag, nreal,                                  database_dir, output_dir, setting = "Optimistic",                                  write_h5 = True)
+plt.plot(wv, mag)
+plt.show()
 
 
-# 
+# In[ ]:
+
+
+
+

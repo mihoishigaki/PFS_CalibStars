@@ -231,7 +231,7 @@ def flux2ABmag(wave, flux, band, mag, plot = False):
 
 
     
-    # "band" should be either "sdss_g" or "V"
+    # "band" should be either "sdss_g" or "V" for the moment 
 
     # The input "wave" should be in nm
     
@@ -253,8 +253,10 @@ def flux2ABmag(wave, flux, band, mag, plot = False):
     wv_vega = sp_vega.waveset
     fl_vega = sp_vega(wv_vega,flux_unit=units.FLAM)  
 
+
     ## Convolve with the bandpass
     obs_vega = Observation(sp_vega, bp)
+
     
     ## Integrated flux
     fluxtot_vega = obs_vega.integrate()
@@ -268,10 +270,14 @@ def flux2ABmag(wave, flux, band, mag, plot = False):
 
     ## Convolve with the bandpass
     obs = Observation(sp, bp, force='extrap')
+
+
     
     ## Integrated g-band flux
     fluxtot = obs.integrate()
-    
+
+
+    print("Kokomade4")
     
     # Scaling factor to make the flux compatible with the desired magnitude
     dm = mag-magvega
@@ -286,13 +292,6 @@ def flux2ABmag(wave, flux, band, mag, plot = False):
     
     sp_scaled_mag = SourceSpectrum(Empirical1D, points = wv, lookup_table = fl_scale_mag)
 
-    #aa = np.array([wv[1:-1]/10.,sp_scaled_mag(wv,flux_unit=u.ABmag)[1:-1]])
-   
-    
-    #fluxfilename = ((fluxfile[:-4]).split('/'))[-1]
-    #magfilename = (fluxfile[:-4].split('Synspec'))[0]+"ABmag/"+fluxfilename+"_%s_%.1f.txt"%(band,mag)
-    
-    #np.savetxt(magfilename,aa.T,fmt='%.3f %.3f')
 
     # Plot
     if plot == True: 
@@ -304,9 +303,10 @@ def flux2ABmag(wave, flux, band, mag, plot = False):
         ax[1].set_ylabel("ABmag")
         ax[1].set_ylim(mag+3.,mag-2.0)
         #plt.show()
-
     
     return(wv[1:-1]/10., sp_scaled_mag(wv, flux_unit = u.ABmag)[1:-1])
+
+
 
 
 def run_etc(input_name, ObjID, res, MP, field_angle, MTangle, TP, \
@@ -1353,8 +1353,25 @@ def get_exptime(band, mag, objtype):
                 nexp=2
             elif mag<=18:
                 nexp=1
+
+            #if mag > 22.5:
+            #    nexp = 20
+            #elif mag<=22.5 and mag>21.5:
+            #    nexp=12
+            #elif mag<=21.5 and mag>20.5:
+            #    nexp = 12
+            #elif mag<=20.5 and mag>19.5:
+            #    nexp=8
+            #elif mag<=19.5 and mag>18.5:
+            #    nexp=4
+            #elif mag<=18.5:
+            #    nexp=2
+                
+
                 
     return(exptime,nexp)
+
+
 
 
 
@@ -1503,18 +1520,18 @@ def get_linelist_red():
 
 
 def normalize_spec(w, f, w0, f0, ferr0, \
-                   medfilt_widh = 10, maxfilt_width = 5, order = 4):
+                   medfilt_width = 10, maxfilt_width = 5, order = 4):
 
     # w, f : arrays used to define a continuum function
     # w0, f0, ferr0: target flux to be normalized
 
     
     # Median filter
-    f_medfilt = ndimage.median_filter(f, size = 10)
+    f_medfilt = ndimage.median_filter(f, size = medfilt_width)
     
     
     # Maximum filter
-    f_maxfilt = ndimage.maximum_filter(f_medfilt, size = 5) 
+    f_maxfilt = ndimage.maximum_filter(f_medfilt, size = maxfilt_width) 
     
     
     

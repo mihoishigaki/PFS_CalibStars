@@ -12,5 +12,5 @@ from pfs_calibstars.simulate import *
 from pfs_calibstars.measure import *
 from pfs_calibstars.utility import *
 from pfs_calibstars.datamodel import *
-
+from pfs_calibstars.plot import *
 

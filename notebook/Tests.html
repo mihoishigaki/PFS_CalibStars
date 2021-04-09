@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>main</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Tests</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14298,132 +14298,22 @@ a.anchor-link {
 </div>
 </div>
 
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Create-databases-of-simulated-spectra">Create databases of simulated spectra<a class="anchor-link" href="#Create-databases-of-simulated-spectra">&#182;</a></h2>
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">libID</span> <span class="o">=</span> <span class="s2">&quot;HDS&quot;</span>
-<span class="n">cs</span><span class="o">.</span><span class="n">produce_database</span><span class="p">(</span><span class="n">libID</span><span class="p">,</span> <span class="n">multiproc</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[&#39;Name of the object 00092 =&gt; G53-41&#39;][&#39;Name of the object 00081 =&gt; BD+292356&#39;]
-
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>##### starting to run ETC ... (it takes a few min.) #####
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 69.3[sec]) #####
-##### finished (elapsed_time: 69.6[sec]) #####
-##### starting to run ETC ... (it takes a few min.) #####
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 69.3[sec]) #####
-##### finished (elapsed_time: 69.5[sec]) #####
-##### starting to run ETC ... (it takes a few min.) #####
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 68.2[sec]) #####
-##### finished (elapsed_time: 68.1[sec]) #####
-##### starting to run ETC ... (it takes a few min.) #####
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 68.0[sec]) #####
-##### finished (elapsed_time: 68.3[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>()</pre>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Produce-many-simulated-spectra">Produce many simulated spectra<a class="anchor-link" href="#Produce-many-simulated-spectra">&#182;</a></h2>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">libID</span> <span class="o">=</span> <span class="s2">&quot;HDS&quot;</span>
-<span class="n">nreal</span> <span class="o">=</span> <span class="mi">100</span>
-
-<span class="n">ObjIDs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;00092&quot;</span><span class="p">,</span> <span class="s2">&quot;00081&quot;</span><span class="p">]</span>
-
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">synspecpath</span> <span class="o">=</span> <span class="n">database_dir</span> <span class="o">+</span> <span class="s2">&quot;/HDS/00081/Synspec/&quot;</span>
+<span class="n">synspecfile</span> <span class="o">=</span> <span class="n">synspecpath</span> <span class="o">+</span> <span class="s2">&quot;WL_Flux_Error_BD+292356_Teff4827_logg1.6_MH-1.7_Vrad0.0.txt&quot;</span>
+<span class="n">w</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">synspecfile</span><span class="p">,</span> <span class="n">usecols</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">unpack</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">band</span> <span class="o">=</span> <span class="s2">&quot;sdss_g&quot;</span>
+<span class="n">mag</span> <span class="o">=</span> <span class="mf">17.</span>
 
-<span class="k">for</span> <span class="n">ObjID</span> <span class="ow">in</span> <span class="n">ObjIDs</span><span class="p">:</span>
-    
-    <span class="k">for</span> <span class="n">mag</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">17.</span><span class="p">,</span> <span class="mf">18.</span><span class="p">,</span> <span class="mf">19.</span><span class="p">,</span> <span class="mf">20.</span><span class="p">,</span> <span class="mf">21.</span><span class="p">,</span> <span class="mf">22.</span><span class="p">,</span> <span class="mf">23.</span><span class="p">]:</span> 
-        
-        <span class="n">exptime</span><span class="p">,</span> <span class="n">nexp</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">get_exptime</span><span class="p">(</span><span class="s2">&quot;sdss_g&quot;</span><span class="p">,</span> <span class="n">mag</span><span class="p">,</span> <span class="s2">&quot;science&quot;</span><span class="p">)</span>
-        <span class="n">nexps</span> <span class="o">=</span> <span class="p">[</span><span class="n">nexp</span><span class="p">]</span>
+<span class="n">wv</span><span class="p">,</span> <span class="n">mag</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="n">flux2ABmag</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">band</span><span class="p">,</span> <span class="n">mag</span><span class="p">)</span>
 
-        <span class="n">cs</span><span class="o">.</span><span class="n">simulate_many_spectra</span><span class="p">(</span><span class="n">ObjID</span><span class="p">,</span> <span class="n">libID</span><span class="p">,</span> <span class="n">nexps</span><span class="p">,</span> <span class="n">band</span><span class="p">,</span> <span class="n">mag</span><span class="p">,</span> <span class="n">nreal</span><span class="p">,</span> \
-                                 <span class="n">database_dir</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">setting</span> <span class="o">=</span> <span class="s2">&quot;Optimistic&quot;</span><span class="p">,</span> \
-                                 <span class="n">write_h5</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">wv</span><span class="p">,</span> <span class="n">mag</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
      </div>
@@ -14458,8 +14348,6 @@ a.anchor-link {
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 65.4[sec]) #####
 </pre>
 </div>
 </div>
@@ -14470,362 +14358,12 @@ a.anchor-link {
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
 
-<div class="jp-OutputArea-child">
 
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 61.8[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 61.0[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 62.2[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 64.9[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 64.8[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 62.6[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 63.4[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 62.8[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 60.7[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 64.4[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 63.0[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 63.8[sec]) #####
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>WARNING: Source spectrum will be extrapolated (at constant value for empirical model). [synphot.observation]
-/Users/ishigakimiho/opt/anaconda3/lib/python3.7/site-packages/astropy/units/function/logarithmic.py:46: RuntimeWarning: divide by zero encountered in log10
-  return dex.to(self._function_unit, np.log10(x))
-</pre>
-</div>
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>Kokomade4
-##### starting to run ETC ... (it takes a few min.) #####
-##### finished (elapsed_time: 64.6[sec]) #####
-</pre>
-</div>
+<div class="jp-RenderedImage jp-OutputArea-output ">
+<img src="data:image/png;base64,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
+"
+>
 </div>
 
 </div>
@@ -14833,10 +14371,21 @@ a.anchor-link {
 </div>
 
 </div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+     </div>
 </div>
+</div>
+</div>
+
 </div>
 </body>
 

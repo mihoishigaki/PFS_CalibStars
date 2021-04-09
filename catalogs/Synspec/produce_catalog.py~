@@ -1,0 +1,21 @@
+import numpy as np
+import pandas as pd
+
+stars = {"K-giant": [4800., 1.6], "G-dwarf": [6000., 4.5]}
+
+fehs = np.arange(-2.5, 0.0, 0.5)
+alphas = [[0.0] * len(fehs)]
+
+
+teffs = ()
+loggs = ()
+
+for i, star in enumerate(stars.keys()):
+    teff = stars[star][0]
+    logg = stars[star][1]
+
+    print(teff, logg)
+    
+    #for j, feh in enumerate(fehs):
+
+        
