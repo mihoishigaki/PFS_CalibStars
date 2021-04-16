@@ -1,10 +1,17 @@
 import numpy as np
 import pandas as pd
+import sys
 
+
+# Identify of stars. 
+ 
 stars = {"K-giant": \
          [4800., 1.6, 195.4684554018686, +29.1883153466994, 11.50, 9.049], \
          "G-dwarf": \
          [6000., 4.5, 156.8510260053169, +01.4000534041333, 11.10, 9.595]}
+
+
+# Desired [Fe/H] and [alpha/Fe]
 
 fehgrid = np.arange(-2.5, 0.0, 0.5)
 alphagrid = [0.0] * len(fehgrid)
@@ -22,9 +29,10 @@ teffs = ()
 loggs = ()
 fehs = ()
 alphas = ()
-
+synfiles = ()
 
 for i, star in enumerate(stars.keys()):
+    
     teff = stars[star][0]
     logg = stars[star][1]
     ra = stars[star][2]
@@ -37,10 +45,12 @@ for i, star in enumerate(stars.keys()):
 
         alpha = alphagrid[j]
 
-        starname = star + "_teff%.0f-logg%.1f-feh%.1f-alpha%.1f"%\
+        synfile = '/Users/ishigakimiho/PFS/Github/pfs_calibstars_data/database/Synspec/' + star + "_teff%.0f-logg%.1f-feh%.1f-alpha%.1f.txt"%\
             (teff, logg, feh, alpha)
 
+        synfiles = np.append(synfiles, synfile)
         
+        starname = "%016x"%(i*1000 + j+1)        
         starnames = np.append(starnames, starname)
         ras = np.append(ras, ra)
         decs = np.append(decs, dec)
@@ -57,7 +67,8 @@ for i, star in enumerate(stars.keys()):
 
 data = { "starname": starnames, "ra": ras, "dec": decs, \
          "Vmag": vmags, "Kmag": kmags, \
-         "teff": teffs, "logg": loggs, "feh": fehs, "alphas": alphas}
+         "teff": teffs, "logg": loggs, "feh": fehs, \
+         "alpha": alphas, "synfilepath": synfiles}
 
 df = pd.DataFrame(data)
 

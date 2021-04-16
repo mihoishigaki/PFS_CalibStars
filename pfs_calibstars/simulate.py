@@ -15,7 +15,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-import os, sys, glob, shutil, logging, pathlib
+import os, sys, glob, shutil, logging, pathlib, re
 import pandas as pd
 import subprocess as sp
 from os import path
@@ -276,8 +276,6 @@ def flux2ABmag(wave, flux, band, mag, plot = False):
     ## Integrated g-band flux
     fluxtot = obs.integrate()
 
-
-    print("Kokomade4")
     
     # Scaling factor to make the flux compatible with the desired magnitude
     dm = mag-magvega
@@ -756,8 +754,8 @@ def plot_simulated_spec(ObjIDs, nexps, bands, mags, textlabels, \
     return()
 
 
-def simulate_many_spectra(ObjID, libID, nexps, band, mag, \
-                          nreal, database_dir, output_rootdir,  \
+def simulate_many_spectra(ObjID, catalogfile, nexps, band, mag, \
+                          nreal, synfile, output_rootdir,  \
                           setting = "Optimistic", \
                           write_h5 = False, plot = False):
 
@@ -766,7 +764,7 @@ def simulate_many_spectra(ObjID, libID, nexps, band, mag, \
 
     ## Information from the catalog
     starname, ra, dec, vmag, kmag, teff, logg, feh, rv = \
-        get_stellarinfo(ObjID, libID)
+        get_stellarinfo(ObjID, catalogfile)
     
     ## Assign magnitudes consistent with the stellar parameters
     gabs, rabs, iabs, zabs, yabs = get_isochrone_info(teff, logg, feh)
@@ -795,7 +793,7 @@ def simulate_many_spectra(ObjID, libID, nexps, band, mag, \
     setting_label, MP, field_angle, MTangle, TP = get_setting(setting)
 
 
-    outdir = output_rootdir + "/" + libID + "/" + ObjID + "/" + \
+    outdir = output_rootdir + "/"  + ObjID + "/" + \
         res + "/" + setting_label + "/"
     
     if os.path.isdir(outdir) == False:
@@ -803,21 +801,21 @@ def simulate_many_spectra(ObjID, libID, nexps, band, mag, \
                     
         
 
-    synfile = get_synfile(database_dir, ObjID, libID, Vrad0flag = True)
+    #synfile = get_synfile(database_dir, ObjID, libID, Vrad0flag = True)
 
-    wave, flux = np.loadtxt(synfile, usecols = (0, 1), unpack = True)
+    wave, flux = np.loadtxt(synfile, usecols = (0, 1), unpack = True, skiprows = 1)
     
     wvs, ABmags = flux2ABmag(wave, flux, band, mag)
 
 
-    # Save magnitudes to a file 
+    # Save magnitudes to a file s
     aa = np.array([wvs, ABmags])
 
     
     synfilename = (((synfile[:-4]).split('/'))[-1]).replace("WL_Flux_Error_", "")
 
 
-    magfilename = outdir + synfilename + "_%s_%.1f.txt"%(band,mag)
+    magfilename = outdir + "pfsSim_" + ObjID + "_%s_%.1f.txt"%(band,mag)
 
     
     np.savetxt(magfilename,aa.T,fmt='%.3f %.3f')
@@ -861,6 +859,17 @@ def simulate_many_spectra(ObjID, libID, nexps, band, mag, \
         #for file in fitsfiles:
         
         for file in outsimname_fits:
+
+            original_filename = (file.split("/"))[-1]
+
+            iteration_number = int((original_filename.split("-"))[4], 16)
+            ObjID_itr = int(ObjID, 16) + iteration_number 
+
+            
+            new_filename = '-'.join((original_filename.split("-"))[:4]) + "-%016x-"%(ObjID_itr) + \
+                '-'.join((original_filename.split("-"))[5:])
+
+            
             hdul=fits.open(file, mode='update')
 
             hdul[3].data['fiberMag'] = [gmag, rmag, imag, zmag, ymag]
@@ -870,7 +879,7 @@ def simulate_many_spectra(ObjID, libID, nexps, band, mag, \
             hdul.flush()
             hdul.close()
             
-            shutil.move(file, dirname + "/" + (file.split("/"))[-1])
+            shutil.move(file, dirname + "/" + new_filename)
         
         
 
@@ -897,6 +906,7 @@ def simulate_many_spectra(ObjID, libID, nexps, band, mag, \
 
 
         if plot==True:
+            
             #fig, ax = plt.subplots(1, 1)
             for k, textfile in enumerate(textfilelist):
                 w0, f0, ferr0 = \
@@ -1255,14 +1265,12 @@ def get_synfile(database_dir, ObjID, libID, Vrad0flag = False):
     return(synfiles[0])
 
 
-def get_stellarinfo(ObjID,libID):
+def get_stellarinfo(ObjID, catalogfile):
 
     
-
-    if libID == "HDS":
+    if re.search("HDS", catalogfile):
 
          # Read catalog of star's basic information
-        catalogfile = "../catalogs/"+libID+"/"+"catalog_"+libID+".csv"
         df = pd.read_csv(catalogfile)
         filt = df['HaKiDaSName'] == "HaKiDaS" + ObjID
 
@@ -1285,17 +1293,31 @@ def get_stellarinfo(ObjID,libID):
         feh = np.float(df['[Fe/H]'][filt])
         rv = np.float(df['rv_HDS'][filt])
 
+    else:
         
-    #synfilepath = get_synfile(ObjID, libID)
-    #synfilename = (synfilepath.split('/'))[-1]
-    #params = synfilename.split('_')
-    #teff = np.float64((params[4])[-4:])
-    #logg = np.float64((params[5])[-3:])
-    #mh = np.float64((params[6])[-4:])
-    #vlos = np.float64(((params[7])[:-4])[4:])
-    
-    
-    
+        # Read catalog of star's basic information
+        df = pd.read_csv(catalogfile)
+        filt = df['starname'] == ObjID
+
+        starname = df['starname'][filt]
+        if len(starname) == 0:
+            print("Information on %s not found in the catalog %s\n"%(ObjID, catalogfile))
+            sys.exit()
+        elif len(starname) > 1:
+            print("More than one object found in the catalog %s\n"%(ObjID, catalogfile))
+            sys.exit()
+            
+        ra = np.float(df['ra'][filt])
+        dec = np.float(df['dec'][filt])
+        vmag = np.float(df['Vmag'][filt])
+        kmag = np.float(df['Kmag'][filt])
+
+        teff = np.float(df['teff'][filt])
+        logg = np.float(df['logg'][filt])
+        feh = np.float(df['feh'][filt])
+        rv = 0.0
+
+        
     return(starname, ra, dec, vmag, kmag, teff, logg, feh, rv)
 
 
