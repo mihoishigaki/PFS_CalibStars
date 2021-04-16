@@ -55,16 +55,6 @@ df = pd.read_csv(catalog_name, dtype = {'synfilepath': str})
 df
 
 
-# In[27]:
-
-
-
-ObjIDs = df["starname"].values
-for ObjID in ObjIDs:
-    synfile = ((df["synfilepath"][df["starname"] == ObjID]).values)[0]
-    print(synfile)
-
-
 # ## Produce many simulated spectra 
 
 # In[ ]:
