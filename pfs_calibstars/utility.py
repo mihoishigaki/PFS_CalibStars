@@ -1,6 +1,6 @@
 import numpy as np
 
-import sys
+import sys, os
 
 import h5py
 
@@ -62,4 +62,31 @@ def read_h5(h5file):
     errors = errors.reshape(nobj, len(wave))
     
     return(sn, waves, fluxs, errors)
+
+
+
+def create_zip_tar():
+
+	import glob, subprocess
+	
+	files = glob.glob("../../pfs_calibstars_data/outputs/Synspec/*/MR/MP*/*pfsObject/", recursive = True)
+	
+	for file in files:
+		tarfilename = file[:-1] + ".tar"
+		command = "tar -cvf " + tarfilename + " " + file
+		proc = subprocess.run(command, shell = True)
+		command = "gzip " + tarfilename
+		proc = subprocess.run(command, shell = True)
+		print(file, tarfilename)
+	#proc = subprocess.Popen(command, shell = True, stdout = subprocess.PIPE)
+	#output = proc.communicate()
+	#dirlist = output.split('\n')
+	#print(output[0].split('\n'))
+	return()
+
+
+#create_zip_tar()
+
+
+
 

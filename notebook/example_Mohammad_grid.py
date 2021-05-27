@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[20]:
 
 
 get_ipython().run_line_magic('matplotlib', 'inline')
@@ -31,22 +31,55 @@ import pfs_calibstars as cs
 
 
 
-# ## Signal-to-noise ratios for the Mohammad's grid
+# ## Read a spectrum
 
-# In[2]:
+# In[21]:
 
 
-path = "../speclib/Mohammad_grid/synthetic_grid/" 
-file = "4000g+1.00z-3.00_4000-5000_xit2.0c0.00.spec"
+path = "../speclib/Mohammad_grid/TestSpec_May25/" 
+file = "5100g+3.00z-3.00_xit2.0c0.00.spec"
 outpath = "../../pfs_calibstars_data/outputs/Mohammad_grid/"
 
 w, nf, f = np.loadtxt(path + file, usecols = (0, 1, 2), unpack = True)
 
+
+# ## Plot to check the input  spectrum
+
+# In[5]:
+
+
+#plt.plot(w, f)
+#plt.show()
+
+
+# ## Degrade resolution and take into account the wavelength coverages for blue, red (medium resolution) and nir
+
+# In[22]:
+
+
+w_conv, f_conv = cs.convolve_spectra_arms(w, f)
+
+
+# ## Plot the degraded spectrum
+
+# In[24]:
+
+
+plt.plot(w_conv, f_conv)
+plt.show()
+
+
+# ## Signal-to-noise ratios for the Mohammad's grid
+
+# In[25]:
+
+
+
 # Convirt to AB mag
 band = "sdss_g"
 mag = 20.
-w_nm, mag = cs.flux2ABmag(w/10., f, band, mag)
-
+#w_nm, mag = cs.flux2ABmag(w/10., f, band, mag)
+w_nm, mag = cs.flux2ABmag(w_conv/10., f_conv, band, mag)
  
 # Save magnitudes to a file 
 aa = np.array([w_nm, mag])
@@ -86,12 +119,6 @@ etc.set_param('degrade',TP)
 etc.run()
 
 
-w, snc = np.loadtxt(outsncname, usecols = (2, 3), unpack = True)
-plt.plot(w, snc)
-plt.xlim(400., 510.)
-plt.show()
-    
-
 # Nexp = 4 => S/N = 37 @ 500nm 
 # Nexp = 8 => S/N = 53 @ 500nm
 
@@ -99,34 +126,16 @@ plt.show()
 # In[15]:
 
 
-w, noise = np.loadtxt(outnoisename, usecols = (2, 3), unpack = True)
-plt.plot(w, noise)
-plt.xlim(400., 500.)
-plt.ylim(0.0, np.max(noise[w<500.]))
-plt.show()
-    
-# Nexp = 4 => noise ~ 200 @ 500nm
-
-
-# In[20]:
-
-
-files = ["4000g+1.00z-3.00_4000-5000_xit2.0c0.00.noise"]
-
-fig, ax = plt.subplots(1, 1)
-for file in files:
-    w, noise = np.loadtxt(outpath + file, usecols = (2, 3), unpack = True)
-    ax.plot(w, noise)
-ax.set_xlim(720., 750.)
-ax.set_ylim(0.0, 50000)
-plt.show()
-
+#w, snc = np.loadtxt(outsncname, usecols = (2, 3), unpack = True)
+#plt.plot(w, snc)
+#plt.xlim(840., 890.)
+#plt.show()
     
 
 
 # ## Simulated spectra for the Mohammad's grid
 
-# In[6]:
+# In[26]:
 
 
 # Use inputs and outputs from etc.run()
@@ -140,12 +149,15 @@ sim.set_param('asciiTable', file[:-5] + ".sim")
 sim.set_param('nrealize',1)
 sim.make_sim_spec()
 
+
+# In[27]:
+
+
 w, f = np.loadtxt(outpath + file[:-5] + ".sim.dat", usecols = (0, 1), unpack = True)
 plt.plot(w, f)
-plt.xlim(380., 510.)
-plt.ylim(0.0, np.max(f[w < 500.]))
+plt.xlim(380., 410.)
+plt.ylim(0.0, np.max(f[w < 410.]))
 plt.show()
-
 
 
 

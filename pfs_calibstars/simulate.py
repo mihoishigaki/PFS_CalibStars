@@ -15,7 +15,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
-import os, sys, glob, shutil, logging, pathlib, re
+import os, sys, glob, shutil, logging, pathlib
 import pandas as pd
 import subprocess as sp
 from os import path
@@ -754,8 +754,8 @@ def plot_simulated_spec(ObjIDs, nexps, bands, mags, textlabels, \
     return()
 
 
-def simulate_many_spectra(ObjID, catalogfile, nexps, band, mag, \
-                          nreal, synfile, output_rootdir,  \
+def simulate_many_spectra(ObjID, libID, nexps, band, mag, \
+                          nreal, database_dir, output_rootdir,  \
                           setting = "Optimistic", \
                           write_h5 = False, plot = False):
 
@@ -764,7 +764,7 @@ def simulate_many_spectra(ObjID, catalogfile, nexps, band, mag, \
 
     ## Information from the catalog
     starname, ra, dec, vmag, kmag, teff, logg, feh, rv = \
-        get_stellarinfo(ObjID, catalogfile)
+	get_stellarinfo(ObjID, libID)
     
     ## Assign magnitudes consistent with the stellar parameters
     gabs, rabs, iabs, zabs, yabs = get_isochrone_info(teff, logg, feh)
@@ -793,29 +793,34 @@ def simulate_many_spectra(ObjID, catalogfile, nexps, band, mag, \
     setting_label, MP, field_angle, MTangle, TP = get_setting(setting)
 
 
-    outdir = output_rootdir + "/"  + ObjID + "/" + \
-        res + "/" + setting_label + "/"
+    outdir = output_rootdir + "/" + libID + "/" + ObjID + "/" + \
+	res + "/" + setting_label + "/"
     
     if os.path.isdir(outdir) == False:
         Path(outdir).mkdir(parents=True, exist_ok=True)
                     
         
+    if libID == "HDS":
+        synfile = get_synfile(database_dir, ObjID, libID, Vrad0flag = True)
 
-    #synfile = get_synfile(database_dir, ObjID, libID, Vrad0flag = True)
+    else:
+        synfile = get_synfile(database_dir, ObjID, libID, Vrad0flag = False)
+
 
     wave, flux = np.loadtxt(synfile, usecols = (0, 1), unpack = True, skiprows = 1)
     
     wvs, ABmags = flux2ABmag(wave, flux, band, mag)
 
 
-    # Save magnitudes to a file s
+
+    # Save magnitudes to a file 
     aa = np.array([wvs, ABmags])
 
     
     synfilename = (((synfile[:-4]).split('/'))[-1]).replace("WL_Flux_Error_", "")
 
 
-    magfilename = outdir + "pfsSim_" + ObjID + "_%s_%.1f.txt"%(band,mag)
+    magfilename = outdir + synfilename + "_%s_%.1f.txt"%(band,mag)
 
     
     np.savetxt(magfilename,aa.T,fmt='%.3f %.3f')
@@ -830,22 +835,22 @@ def simulate_many_spectra(ObjID, catalogfile, nexps, band, mag, \
     
         # Run the ETC code 
         outsncname = run_etc(magfilename,ObjID,res,MP,field_angle,MTangle, \
-                             TP,exptime,nexp, setting_label, outdir)
+		    TP,exptime,nexp, setting_label, outdir)
 
         snrs[i] = calc_sn(outsncname, res)
         
         # Run the simulator
         
-        ## Delete all existing pfsObject*.fits file
+	## Delete all existing pfsObject*.fits file
         fitsfilelist = glob.glob(outdir + "pfsObject*.fits")
         for file in fitsfilelist:
             os.remove(file)
 
         
         outsimname, outsimname_fits = run_simulator(magfilename,outsncname,TP, \
-                                                   res,exptime, nexp, ObjID, \
-                                                   setting_label, outdir, \
-                                                   nreal = nreal)
+                                                    res,exptime, nexp, ObjID, \
+                                                    setting_label, outdir, \
+                                                    nreal = nreal)
         
         dirname = outsimname.replace(".snc.sim","") + "_pfsObject"
         if os.path.isdir(dirname):
@@ -866,8 +871,11 @@ def simulate_many_spectra(ObjID, catalogfile, nexps, band, mag, \
             ObjID_itr = int(ObjID, 16) + iteration_number 
 
             
-            new_filename = '-'.join((original_filename.split("-"))[:4]) + "-%016x-"%(ObjID_itr) + \
+            new_filename = '-'.join((original_filename.split("-"))[:4]) + \
+                "-%016x-"%(ObjID_itr) + \
                 '-'.join((original_filename.split("-"))[5:])
+
+
 
             
             hdul=fits.open(file, mode='update')
@@ -879,7 +887,7 @@ def simulate_many_spectra(ObjID, catalogfile, nexps, band, mag, \
             hdul.flush()
             hdul.close()
             
-            shutil.move(file, dirname + "/" + new_filename)
+            shutil.move(file, dirname + "/" + (file.split("/"))[-1])
         
         
 
@@ -906,11 +914,10 @@ def simulate_many_spectra(ObjID, catalogfile, nexps, band, mag, \
 
 
         if plot==True:
-            
             #fig, ax = plt.subplots(1, 1)
             for k, textfile in enumerate(textfilelist):
                 w0, f0, ferr0 = \
-                    np.loadtxt(textfile, usecols = (0, 1, 2), unpack = True)
+		    np.loadtxt(textfile, usecols = (0, 1, 2), unpack = True)
 
                 filt = (w0 > 650.) & (w0 < 900)
                 w = w0[filt]
@@ -919,7 +926,6 @@ def simulate_many_spectra(ObjID, catalogfile, nexps, band, mag, \
 
                 f_norm, ferr_norm = normalize_spec(w, f, w0, f0, ferr0)
                 ax.plot(w0, f_norm)
-
 
                 if k == 3:
                     break
@@ -1255,8 +1261,9 @@ def get_synfile(database_dir, ObjID, libID, Vrad0flag = False):
         synfiles = glob.glob(database_dir + "/" + libID+"/"+ObjID+"/Synspec/*Vrad0.0.txt")
 
     else:
+        #print(database_dir + "/" + libID+"/"+ObjID+"/Synspec/*")
         synfiles = glob.glob(database_dir + "/" + libID+"/"+ObjID+"/Synspec/*")
-
+        print(database_dir + "/" + libID+"/"+ObjID+"/Synspec/*")
     
     if np.size(synfiles)==0:
         print("No synthetic spectra found for  "+libID+"/"+ObjID+". Please check!")
@@ -1265,12 +1272,13 @@ def get_synfile(database_dir, ObjID, libID, Vrad0flag = False):
     return(synfiles[0])
 
 
-def get_stellarinfo(ObjID, catalogfile):
+def get_stellarinfo(ObjID, libID):
 
     
-    if re.search("HDS", catalogfile):
+    if libID == "HDS":
 
-         # Read catalog of star's basic information
+        # Read catalog of star's basic information
+        catalogfile = "../catalogs/"+libID+"/"+"catalog_"+libID+".csv"
         df = pd.read_csv(catalogfile)
         filt = df['HaKiDaSName'] == "HaKiDaS" + ObjID
 
@@ -1287,15 +1295,16 @@ def get_stellarinfo(ObjID, catalogfile):
         dec = np.float(df['DEC_1'][filt])
         vmag = np.float(df['Vmag'][filt])
         kmag = np.float(df['Kmag_x'][filt])
-
+        
         teff = np.float(df['Teff'][filt])
         logg = np.float(df['logg'][filt])
         feh = np.float(df['[Fe/H]'][filt])
         rv = np.float(df['rv_HDS'][filt])
 
-    else:
-        
+    elif libID == "Synspec":
+	
         # Read catalog of star's basic information
+        catalogfile = "../catalogs/"+libID+"/"+"catalog_"+libID+".csv"
         df = pd.read_csv(catalogfile)
         filt = df['starname'] == ObjID
 
@@ -1303,21 +1312,34 @@ def get_stellarinfo(ObjID, catalogfile):
         if len(starname) == 0:
             print("Information on %s not found in the catalog %s\n"%(ObjID, catalogfile))
             sys.exit()
+
         elif len(starname) > 1:
             print("More than one object found in the catalog %s\n"%(ObjID, catalogfile))
             sys.exit()
-            
+
+
         ra = np.float(df['ra'][filt])
         dec = np.float(df['dec'][filt])
         vmag = np.float(df['Vmag'][filt])
         kmag = np.float(df['Kmag'][filt])
-
+        
         teff = np.float(df['teff'][filt])
         logg = np.float(df['logg'][filt])
         feh = np.float(df['feh'][filt])
         rv = 0.0
 
-        
+
+  
+    #synfilepath = get_synfile(ObjID, libID)
+    #synfilename = (synfilepath.split('/'))[-1]
+    #params = synfilename.split('_')
+    #teff = np.float64((params[4])[-4:])
+    #logg = np.float64((params[5])[-3:])
+    #mh = np.float64((params[6])[-4:])
+    #vlos = np.float64(((params[7])[:-4])[4:])
+    
+    
+    
     return(starname, ra, dec, vmag, kmag, teff, logg, feh, rv)
 
 
@@ -1564,4 +1586,54 @@ def normalize_spec(w, f, w0, f0, ferr0, \
     
     return(f_norm, ferr_norm)
 
+ 
+def convolve_spectrum(w, f, fwhm):
+
+    from astropy.convolution import Gaussian1DKernel, convolve
+
+    sigma = fwhm / (2*np.sqrt(2*np.log(2)))
+
     
+    bin_width = np.mean(w[1:]-w[:-1])
+ 
+    sigma_bins = sigma / bin_width
+    g = Gaussian1DKernel(stddev = sigma_bins)
+ 
+    f_c = convolve(f, g)
+
+    return(w, f_c)
+
+
+
+def convolve_spectra_arms(w0, f0):
+
+    # Wavelength in A
+    # Flux in arbitrary units
+    
+    arms = ["blue", "red", "nir"]
+    wmins = [3800, 7100, 9400]
+    wmaxs = [6500, 8850, 12600]
+    fwhms = [2.1, 1.6, 2.4] # Spectral resolution in angstrome
+
+    w = ()
+    f = ()
+
+    for i, arm in enumerate(arms):
+
+        filt = (w0 > wmins[i]) & (w0 < wmaxs[i]) 
+
+        
+        if len(w0[filt])<1:
+            continue
+        
+        ww, ff = convolve_spectrum(w0[filt], f0[filt], fwhms[i])
+
+        w = np.hstack((w, ww))
+        f = np.hstack((f, ff))
+        
+    return(w, f)
+    
+    
+
+
+
