@@ -1633,7 +1633,33 @@ def convolve_spectra_arms(w0, f0):
         
     return(w, f)
     
+
+def add_noise_to_normalized_spec(inputspec, noisefile):
+
+    w, f = np.loadtxt(inputspec, usecols = (0, 1), unpack = True, skiprows = 1)
+
+
+    w_snc, snc = np.loadtxt(noisefile, usecols = (2, 3), unpack = True)
+
     
+    f_n = ()
+    w_n = ()
+    f_n_err = ()
+    for i, ww in enumerate(w):
 
+        if ww < np.min(w_snc):
+            continue
+        elif ww > np.max(w_snc):
+            break
+        
+        # SN at ww:
+        fitted_curve = interpolate.interp1d(w_snc, snc)
+        sn = fitted_curve(ww)
 
-
+        
+        mu, sigma = 0.0, f[i]/sn
+        ff_n= f[i] + np.random.normal(mu, sigma, 1)
+        f_n = np.hstack((f_n, ff_n))
+        w_n = np.hstack((w_n, ww))
+        f_n_err = np.hstack((f_n_err, f[i]/sn))
+    return(w_n, f_n, f_n_err)
